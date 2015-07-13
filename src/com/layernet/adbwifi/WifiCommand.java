@@ -35,7 +35,7 @@ public class WifiCommand implements Command {
         GenericReceiver receiver = new GenericReceiver();
         try {
             System.out.println("executeShellCommand...");
-            device.executeShellCommand("netcfg", receiver,1000);
+            device.executeShellCommand("netcfg | grep UP | grep wlan", receiver,1000);
         } catch (TimeoutException e) {
             e.printStackTrace();
             error(e.getMessage());
@@ -61,12 +61,12 @@ public class WifiCommand implements Command {
         }else if (ipAddress != null) {
 
             if (AndroidSdkUtils.getAndroidSdkPathsFromExistingPlatforms().size() > 0) {
-                androidSdkPath = Iterables.get(AndroidSdkUtils.getAndroidSdkPathsFromExistingPlatforms(), 0).replace("/", "\\");
-                androidSdkPath = androidSdkPath + "\\platform-tools\\";
+                androidSdkPath = Iterables.get(AndroidSdkUtils.getAndroidSdkPathsFromExistingPlatforms(), 0);
+                androidSdkPath = androidSdkPath + "/platform-tools/";
                 File file = new File(androidSdkPath + "adb.exe");
                 System.out.println("file : "+ file.getAbsolutePath());
-                if (!file.exists() && !file.getName().contains("exe")){
-                    androidSdkPath = "";
+                if (file.exists()){
+                    androidSdkPath = androidSdkPath.replace("/", "\\");
                 }
             } else {
                 error("Android SDK path not found");
@@ -94,7 +94,7 @@ public class WifiCommand implements Command {
     private String getIpAddress(GenericReceiver receiver) {
         for (String line : receiver.getAdbOutputLines()) {
             System.out.println("adb : " + line);
-            if (line.contains("UP") && line.contains("wlan") && !line.contains("127.0.0.1") && !line.contains("0.0.0.0")) {
+            if (!line.contains("127.0.0.1") && !line.contains("0.0.0.0")) {
                 return line.substring(line.indexOf("UP") + 2, line.indexOf("/")).trim();
             }
         }
