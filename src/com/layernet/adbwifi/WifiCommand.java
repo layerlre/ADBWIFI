@@ -63,11 +63,11 @@ public class WifiCommand implements Command {
             if (AndroidSdkUtils.getAndroidSdkPathsFromExistingPlatforms().size() > 0) {
                 androidSdkPath = Iterables.get(AndroidSdkUtils.getAndroidSdkPathsFromExistingPlatforms(), 0);
                 androidSdkPath = androidSdkPath + "/platform-tools/";
-                File file = new File(androidSdkPath + "adb.exe");
-                System.out.println("file : "+ file.getAbsolutePath());
-                if (file.exists()){
-                    androidSdkPath = androidSdkPath.replace("/", "\\");
-                }
+//                File file = new File(androidSdkPath + "adb.exe");
+//                System.out.println("file : "+ file.getAbsolutePath());
+//                if (file.exists()){
+//                    androidSdkPath = androidSdkPath.replace("/", "\\");
+//                }
             } else {
                 error("Android SDK path not found");
                 return false;
