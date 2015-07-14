@@ -2,12 +2,10 @@ package com.layernet.adbwifi;
 
 import com.google.common.collect.Iterables;
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import com.intellij.openapi.project.Project;
+import com.intellij.openapi.wm.WindowManager;
 import org.jetbrains.android.sdk.AndroidSdkUtils;
-
-import java.io.BufferedReader;
-import java.io.File;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -18,7 +16,8 @@ public class AdbUSBRestart {
 
     private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool(new ThreadFactoryBuilder().setNameFormat("AdbWifi-%d").build());
 
-    public static void restart(){
+    public static void restart(final Project project){
+
         EXECUTOR.submit(new Runnable() {
             @Override
             public void run() {
@@ -26,24 +25,15 @@ public class AdbUSBRestart {
                 if (AndroidSdkUtils.getAndroidSdkPathsFromExistingPlatforms().size() > 0) {
                     androidSdkPath = Iterables.get(AndroidSdkUtils.getAndroidSdkPathsFromExistingPlatforms(), 0);
                     androidSdkPath = androidSdkPath + "/platform-tools/";
-//                    File file = new File(androidSdkPath + "adb.exe");
-//                    System.out.println("file : "+ file.getAbsolutePath());
-//                    if (file.exists()){
-//                        androidSdkPath = androidSdkPath.replace("/", "\\");
-//                    }
                 } else {
                     error("Android SDK path not found");
                     return;
                 }
                 try {
+                    WindowManager.getInstance().getStatusBar(project).setInfo("adb kill-server...");
                     Runtime.getRuntime().exec(androidSdkPath + "adb kill-server");
-                    Process process = Runtime.getRuntime().exec(androidSdkPath + "adb start-server");
-                    BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
-                    String line = null;
-
-                    while ((line = in.readLine()) != null) {
-                        System.out.println(line);
-                    }
+                    WindowManager.getInstance().getStatusBar(project).setInfo("adb start-server...");
+                    Runtime.getRuntime().exec(androidSdkPath + "adb start-server");
 
                     info("restart successfully");
 

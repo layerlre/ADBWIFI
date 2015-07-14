@@ -13,16 +13,12 @@ import com.intellij.openapi.ui.DialogWrapper;
 import org.jetbrains.android.facet.AndroidFacet;
 import org.jetbrains.android.sdk.AndroidSdkUtils;
 import org.jetbrains.android.util.AndroidUtils;
-
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import static com.developerphil.adbidea.ui.NotificationHelper.error;
 
-/**
- * Created by layer on 9/7/2558.
- */
 public class AdbWifiConnect {
 
     private static final ExecutorService EXECUTOR = Executors.newCachedThreadPool(new ThreadFactoryBuilder().setNameFormat("AdbWifi-%d").build());
@@ -56,7 +52,7 @@ public class AdbWifiConnect {
                 return null;
             }
             int count = 0;
-            while (bridge.isConnected() == false || bridge.hasInitialDeviceList() == false) {
+            while (!bridge.isConnected() || !bridge.hasInitialDeviceList()) {
                 try {
                     Thread.sleep(100);
                     count++;
