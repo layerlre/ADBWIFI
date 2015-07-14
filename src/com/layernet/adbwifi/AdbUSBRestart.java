@@ -5,6 +5,7 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 import org.jetbrains.android.sdk.AndroidSdkUtils;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.concurrent.ExecutorService;
@@ -26,14 +27,20 @@ public class AdbUSBRestart {
             public void run() {
                 String androidSdkPath;
                 if (AndroidSdkUtils.getAndroidSdkPathsFromExistingPlatforms().size() > 0) {
-                    androidSdkPath = Iterables.get(AndroidSdkUtils.getAndroidSdkPathsFromExistingPlatforms(), 0).replace("/", "\\");
+                    androidSdkPath = Iterables.get(AndroidSdkUtils.getAndroidSdkPathsFromExistingPlatforms(), 0);
+                    androidSdkPath = androidSdkPath + "/platform-tools/";
+                    File file = new File(androidSdkPath + "adb.exe");
+                    System.out.println("file : "+ file.getAbsolutePath());
+                    if (file.exists()){
+                        androidSdkPath = androidSdkPath.replace("/", "\\");
+                    }
                 } else {
                     error("Android SDK path not found");
                     return;
                 }
                 try {
-                    Runtime.getRuntime().exec(androidSdkPath + "\\platform-tools\\adb kill-server");
-                    Process process = Runtime.getRuntime().exec(androidSdkPath + "\\platform-tools\\adb start-server");
+                    Runtime.getRuntime().exec(androidSdkPath + "adb kill-server");
+                    Process process = Runtime.getRuntime().exec(androidSdkPath + "adb start-server");
                     BufferedReader in = new BufferedReader(new InputStreamReader(process.getInputStream()));
                     String line = null;
 
