@@ -4,7 +4,7 @@ ADBWIFI Android Studio plugin for debug android app over Wi-Fi.
 # How to install
 [download ADBWIFI.jar](https://github.com/layerlre/ADBWIFI/releases/download/1.0/ADBWIFI.jar)
 
-in Android Studio: go to File → Settings  → Plugins → Install plugin from disk
+in Android Studio: go to Preferences → Plugins → Install plugin from disk
 
 # How to use it
 1. Connect Android device and adb host computer to a common Wi-Fi network accessible to both. We have found that not all access points are suitable; you may need to use an access point whose firewall is configured properly to support adb.
