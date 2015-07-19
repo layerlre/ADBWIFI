@@ -2,8 +2,6 @@
 ADB WIFI Android Studio plugin for debug android app over Wi-Fi.
 
 # How to install
-[download ADBWIFI.jar](https://github.com/layerlre/ADBWIFI/releases/download/1.0/ADBWIFI.jar)
-
 in Android Studio: go to Preferences → Plugins → Browse repositories and search for ADB WIFI
 
 # How to use it
