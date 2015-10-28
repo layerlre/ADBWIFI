@@ -10,3 +10,4 @@ in Android Studio: go to Preferences → Plugins → Browse repositories and sea
 3. Make sure adb is running in USB mode on host.
 4. in Android Studio: go to tool → android  → ADB WIFI → ADB USB to WIFI
 ![ADBWIFI](https://github.com/layerlre/ADBWIFI/blob/master/adbwifi.jpg?raw=true)
+5. ADB w
