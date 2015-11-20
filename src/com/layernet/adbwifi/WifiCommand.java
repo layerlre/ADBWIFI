@@ -31,7 +31,7 @@ public class WifiCommand implements Command {
         GenericReceiver receiver = new GenericReceiver();
         try {
             WindowManager.getInstance().getStatusBar(project).setInfo("ADB WIFI : scan IP address ...");
-            device.executeShellCommand("netcfg | grep UP | grep wlan", receiver, 1000);
+            device.executeShellCommand("ip -f inet addr show wlan0", receiver, 1000);
         } catch (TimeoutException e) {
             e.printStackTrace();
             error(e.getMessage());
@@ -79,10 +79,16 @@ public class WifiCommand implements Command {
     }
 
     private String getIpAddress(GenericReceiver receiver) {
+
         for (String line : receiver.getAdbOutputLines()) {
-            WindowManager.getInstance().getStatusBar(project).setInfo("ADB WIFI : " + line);
-            if (!line.contains("127.0.0.1") && !line.contains("0.0.0.0")) {
-                return line.substring(line.indexOf("UP") + 2, line.indexOf("/")).trim();
+//            WindowManager.getInstance().getStatusBar(project).setInfo("ADB WIFI : " + line);
+            if (line.contains("inet") && line.contains("wlan0")){
+                int end = line.indexOf("/");
+                try {
+                    return line.substring(5,end);
+                }catch (StringIndexOutOfBoundsException e){
+
+                }
             }
         }
         return null;
