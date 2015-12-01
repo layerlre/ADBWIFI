@@ -9,7 +9,7 @@ import com.developerphil.adbidea.adb.command.receiver.GenericReceiver;
 import org.jetbrains.android.dom.AndroidAttributeValue;
 import org.jetbrains.android.dom.manifest.UsesFeature;
 import org.jetbrains.android.facet.AndroidFacet;
-import org.jetbrains.android.run.DefaultActivityLocator;
+import com.android.tools.idea.run.activity.DefaultActivityLocator;
 import org.jetbrains.android.util.AndroidUtils;
 import org.joor.Reflect;
 import org.joor.ReflectException;
