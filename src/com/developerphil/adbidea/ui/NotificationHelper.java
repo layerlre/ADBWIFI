@@ -14,7 +14,7 @@ public class NotificationHelper {
     }
 
     public static void sendNotification(String message, NotificationType notificationType) {
-        Notification notification = new Notification("com.layernet.adbwifi", "ADB WIFI", espaceString(message), notificationType);
+        Notification notification = new Notification("com.developerphil.adbidea", "ADB IDEA", espaceString(message), notificationType);
         Notifications.Bus.notify(notification);
     }
 

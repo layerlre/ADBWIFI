@@ -1,8 +1,8 @@
 package com.developerphil.adbidea.ui;
 
 /**
- * Created by layer on 28/10/2558.
+ * @author Eugene.Kudelevsky
  */
 public interface DeviceChooserListener {
-    void selectedDevicesChanged();
+  void selectedDevicesChanged();
 }
