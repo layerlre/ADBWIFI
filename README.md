@@ -1,3 +1,4 @@
+# This repo is being deprecated.
 # ADB WIFI
 ADB WIFI Android Studio plugin for debug android app over Wi-Fi.
 
